@@ -1,7 +1,7 @@
 import telebot
 import requests as r
 
-bot = telebot.TeleBot('your_token')
+bot = telebot.TeleBot('user_token')
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
