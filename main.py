@@ -3,7 +3,7 @@ import requests as r
 
 bot = telebot.TeleBot('user_token')
 
-@bot.message_handlers(content_types=['text'])
+@bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     if message.text == 'Hello':
         answer = 'Hello, how can i help you?'
