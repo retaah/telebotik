@@ -2,7 +2,7 @@ import telebot
 import requests as r
 
 
-def get_rates(base):
+def get_currencies():
     url_codes = 'https://api.coinbase.com/v2/currencies'
     response_code = r.get(url_codes)
     data = response_code.json()
@@ -12,8 +12,19 @@ def get_rates(base):
 
     return currencies
 
+def get_rates(base, amount, target):
+    url_codes = f'https://api.coinbase.com/v2/exchange-rates?currency={base.upper()}'
+    try:
+        response_code = r.get(url_codes)
+        data = response_code.json()
+        rates = data['data']['rates']
 
-bot = telebot.TeleBot('your)token')
+        result = round(amount * float(rates[target.upper()]))
+        return result
+    except:
+        return None
+
+bot = telebot.TeleBot('5114733697:AAElaHjA30DWQFnfmCON5eMoG4RwJCyyDVU')
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -29,7 +40,7 @@ def help_message(message):
 
 @bot.message_handler(content_types=['text'])
 def get_codes(message):
-    codes = get_rates('')
+    codes = get_currencies()
     if message.text.startswith('/cur_code'):
         try:
             user_message = message.text.split()
