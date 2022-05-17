@@ -50,7 +50,17 @@ def get_codes(message):
         except (ValueError, TypeError, IndexError, SyntaxError
                 , KeyError):
             bot.send_message(message.caht.id, 'Error')
-
-
+    elif message.text.startswith('/exchange'):
+        user_message = message.text.split()
+        result = get_rates(base=user_message[2],
+                           amount=float(user_message[1]),
+                           target=user_message[4])
+        if result is not None and result != 0.0:
+            base = codes[user_message[2].upper()]
+            target = codes[user_message[4].upper()]
+            answer = f'{user_message[1]} {base} это {result} {target}'
+            bot.send_message(message.chat.id, answer)
+        else:
+            bot.send_message(message.chat.id, 'ERROR')
 
 bot.polling(none_stop=True, interval=0)
