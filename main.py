@@ -1,5 +1,8 @@
 import telebot
 import requests as r
+import os
+
+
 
 
 def get_currencies():
